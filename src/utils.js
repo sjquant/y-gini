@@ -1,12 +1,19 @@
 export default {
   /**
    * Clean text for translation
-   * @param {String} content
+   * @param {String} text
    */
-  cleanText(content) {
-    return content
+  cleanText(text) {
+    return text
       .replace(/<(\/p|\/div|br)>/gi, "\n")
-      .replace(/<[^>]*>?/gm, "")
+      .replace(/<[^>]*>?/gi, "")
       .replace(/&nbsp;/gi, " ");
+  },
+
+  createParagraph(text) {
+    console.log(text);
+    return text
+      .replace(/\.(\s)?(\r)*\n/gi, ".<br><br>")
+      .replace(/(\r)*\n/gi, " ");
   },
 };

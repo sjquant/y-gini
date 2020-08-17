@@ -1,7 +1,7 @@
 const puppeteer = require("puppeteer");
 
 (async () => {
-  let launchOptions = { headless: false };
+  let launchOptions = { headless: true };
 
   const browser = await puppeteer.launch(launchOptions);
   const page = await browser.newPage();
