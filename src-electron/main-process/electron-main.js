@@ -1,4 +1,5 @@
 import { app, BrowserWindow, nativeTheme } from "electron";
+import path from "path";
 
 try {
   if (
@@ -6,7 +7,7 @@ try {
     nativeTheme.shouldUseDarkColors === true
   ) {
     require("fs").unlinkSync(
-      require("path").join(app.getPath("userData"), "DevTools Extensions")
+      path.join(app.getPath("userData"), "DevTools Extensions")
     );
   }
 } catch (_) {}
@@ -39,7 +40,7 @@ function createWindow() {
       nodeIntegrationInWorker: process.env.QUASAR_NODE_INTEGRATION,
 
       // More info: /quasar-cli/developing-electron-apps/electron-preload-script
-      // preload: path.resolve(__dirname, 'electron-preload.js')
+      preload: path.resolve(__dirname, "electron-preload.js"),
     },
   });
 

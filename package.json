@@ -13,6 +13,7 @@
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "core-js": "^3.6.5",
+    "puppeteer": "^5.2.1",
     "quasar": "^1.0.0"
   },
   "devDependencies": {
