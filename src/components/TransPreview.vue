@@ -1,21 +1,26 @@
 <template>
   <section>
     <div class="preview-container full-height">
-      <div class="toolbar-container"></div>
+      <PreviewToolbar />
       <div class="content" v-html="$store.state.translation"></div>
     </div>
   </section>
 </template>
 
+<script>
+import PreviewToolbar from "./TransPreviewToolbar.vue"
+
+export default {
+  components: {
+    PreviewToolbar
+  }
+}
+</script>
+
 <style lang="scss" scoped>
 .preview-container {
   border: 1px solid $grey-4;
   border-radius: 4px;
-
-  > .toolbar-container {
-    height: 32px;
-    border-bottom: 1px solid $grey-4;
-  }
 
   > .content {
     padding: 10px;

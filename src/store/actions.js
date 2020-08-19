@@ -8,7 +8,7 @@ export default {
         ".result-shield-container .translation"
       )[0].innerHTML;
     });
-    commit("SET_TRANSLATION", translation);
+    commit("APPEND_TRANSLATION", translation);
     await page.$eval("#source", el => (el.value = ""));
   },
 };
