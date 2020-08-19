@@ -1,36 +1,47 @@
 <template>
-  <section>
-    <div class="preview-container full-height">
-      <PreviewToolbar />
-      <div class="content" v-html="$store.state.translation"></div>
-    </div>
-  </section>
+  <ContentContainer>
+    <Toolbar>
+      <ToolbarItem icon="view_headline" label="SPLIT-ALL" @click="splitAll" />
+      <ToolbarItem icon="clear" label="CLEAR" @click="clearAll" />
+    </Toolbar>
+    <div class="content text-subtitle1" v-html="$store.state.translation"></div>
+  </ContentContainer>
 </template>
 
 <script>
-import PreviewToolbar from "./TransPreviewToolbar.vue"
+import ContentContainer from "./ContentContainer.vue";
+import Toolbar from "./Toolbar.vue";
+import ToolbarItem from "./ToolbarItem.vue";
 
 export default {
   components: {
-    PreviewToolbar
-  }
-}
+    ContentContainer,
+    Toolbar,
+    ToolbarItem,
+  },
+  methods: {
+    splitAll() {
+      console.log(this.$store.state.translation);
+      const translation = this.$store.state.translation
+        .replace(/\r/gm, "")
+        .replace(/\n/gm, "<br>")
+        .replace(/([\.]+) /gm, "$1<br><br>")
+        .replace(/<br><br>+/gi, "<br><br>");
+      this.$store.commit("SET_TRANSLATION", translation);
+    },
+    clearAll() {
+      this.$store.commit("CLEAR_TRANSLATION");
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-.preview-container {
-  border: 1px solid $grey-4;
-  border-radius: 4px;
-
-  > .content {
-    padding: 10px;
-    line-height: 1.5;
-  }
-}
-</style>
-
-<style lang="scss">
-.preview-container .content {
+.content {
+  padding: 10px;
+  line-height: 1.5;
+  max-height: calc(100% - 32px);
+  overflow-y: auto;
   br {
     content: "";
     display: block;

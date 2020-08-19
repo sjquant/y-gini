@@ -1,36 +1,78 @@
 <template>
-  <section>
-    <q-editor
-      class="full-height"
+  <ContentContainer>
+    <Toolbar>
+      <ToolbarItem icon="translate" label="TRANSLATE" @click="translate" />
+      <ToolbarItem icon="view_headline" label="SPLIT-ALL" @click="splitAll" />
+      <ToolbarItem icon="clear" label="CLEAR" @click="clearAll" />
+    </Toolbar>
+    <textarea
+      ref="editor"
+      class="editor text-subtitle1"
       v-model="content"
-      :definitions="{
-        translate: {
-          tip: 'Translate',
-          icon: 'translate',
-          label: 'translate',
-          handler: translate,
-        },
-      }"
-      :toolbar="[['translate']]"
-    />
-  </section>
+    ></textarea>
+  </ContentContainer>
 </template>
 
 <script>
-import utils from "../utils.js";
+import ContentContainer from "./ContentContainer.vue";
+import Toolbar from "./Toolbar.vue";
+import ToolbarItem from "./ToolbarItem.vue";
 
 export default {
+  components: {
+    ContentContainer,
+    Toolbar,
+    ToolbarItem,
+  },
   data() {
     return {
       content: "",
     };
   },
+  mounted() {
+    this.$refs.editor.addEventListener("paste", e => {
+      e.preventDefault();
+      const clipboardData = e.clipboardData || window.clipboardData;
+      const pastedData = clipboardData.getData("Text");
+      this.content += this.trimSentence(pastedData);
+      this.$refs.editor.focus();
+    });
+  },
   methods: {
+    trimSentence(text) {
+      return text
+        .replace(/\r/gm, "")
+        .replace(/([\w,=\(\)])\n/gm, "$1 ") // fix incomplete sentence
+        .replace(/(\.)(\d+(\-|−)\d+|(\d+,?)+|\d+)/gm, "$1") // Remove footnote
+        .replace(/[\.]\n/gm, ".\n\n");
+    },
     async translate() {
       const selection = window.getSelection().toString();
       const text = selection ? selection : this.content;
-      this.$store.dispatch("TRANSLATE", utils.cleanText(text));
+      this.$store.dispatch("TRANSLATE", text);
+    },
+    clearAll() {
+      this.content = "";
+    },
+    splitAll() {
+      this.content = this.content
+        .replace(/\r/gm, "")
+        .replace(/\n/gm, "\n\n")
+        .replace(/([\.]+) /gm, "$1\n\n")
+        .replace(/\n\n+/gi, "\n\n");
     },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.editor {
+  resize: none;
+  width: 100%;
+  height: calc(100% - 32px);
+  border: none;
+  outline: none;
+  padding: 10px;
+  line-height: 1.5;
+}
+</style>
