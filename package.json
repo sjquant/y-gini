@@ -13,7 +13,6 @@
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "core-js": "^3.6.5",
-    "pdf2json": "^1.2.0",
     "puppeteer": "^5.2.1",
     "quasar": "^1.0.0"
   },
