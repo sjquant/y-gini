@@ -1,7 +1,11 @@
 const puppeteer = require("puppeteer");
 
+const getChromiumExecPath = () => {
+  return puppeteer.executablePath().replace("app.asar", "app.asar.unpacked");
+};
+
 const initBrowser = async () => {
-  let launchOptions = { headless: true };
+  let launchOptions = { headless: true, executablePath: getChromiumExecPath() };
   const browser = await puppeteer.launch(launchOptions);
   return browser;
 };

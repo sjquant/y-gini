@@ -1,6 +1,6 @@
 {
   "name": "y-gini",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Read paper as PDF and google-translate it in Korean",
   "productName": "Y-GINI",
   "author": "sjquant <seonujang92@gmail.com>",
@@ -8,7 +8,8 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",
     "test": "echo \"No test specified\" && exit 0",
-    "dev": "quasar dev -m electron"
+    "dev": "quasar dev -m electron",
+    "build": "quasar build -m electron"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
@@ -21,6 +22,7 @@
     "babel-eslint": "^10.0.1",
     "devtron": "^1.4.0",
     "electron": "^9.0.0",
+    "electron-builder": "^22.4.0",
     "electron-debug": "^3.0.1",
     "electron-devtools-installer": "^3.0.0",
     "eslint": "^6.8.0",
