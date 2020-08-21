@@ -31,10 +31,11 @@ export default {
   },
   mounted() {
     this.$refs.editor.addEventListener("paste", e => {
+      // Change paste behavior
       e.preventDefault();
       const clipboardData = e.clipboardData || window.clipboardData;
       const pastedData = clipboardData.getData("Text");
-      this.content += this.trimSentence(pastedData);
+      document.execCommand("insertText", false, this.trimSentence(pastedData));
       this.$refs.editor.focus();
     });
   },

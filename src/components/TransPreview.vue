@@ -21,7 +21,6 @@ export default {
   },
   methods: {
     splitAll() {
-      console.log(this.$store.state.translation);
       const translation = this.$store.state.translation
         .replace(/\r/gm, "")
         .replace(/\n/gm, "<br>")
