@@ -10,4 +10,8 @@ export default {
   CLEAR_TRANSLATION(state) {
     state.translation = "";
   },
+
+  SET_LOADING(state, status) {
+    state.isLoading = status;
+  },
 };

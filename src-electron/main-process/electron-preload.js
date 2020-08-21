@@ -1,9 +1,12 @@
 const puppeteer = require("puppeteer");
 
-(async () => {
+const initBrowser = async () => {
   let launchOptions = { headless: true };
-
   const browser = await puppeteer.launch(launchOptions);
+  return browser;
+};
+
+const initPage = async browser => {
   const page = await browser.newPage();
 
   await page.setUserAgent(
@@ -21,6 +24,25 @@ const puppeteer = require("puppeteer");
   // detect the source textarea for input data (source string)
   await page.waitForSelector("#source");
   await page.waitFor(1000);
-  window.browser = browser;
-  window.page = page;
+  return page;
+};
+
+(async () => {
+  window.browser = await initBrowser();
+  window.page = await initPage(window.browser);
 })();
+
+window.getPage = async () => {
+  if (!window.browser) {
+    window.browser = await initBrowser();
+    window.page = await initPage(window.browser);
+    return window.page;
+  }
+
+  if (window.page && !window.page.isClosed()) {
+    return window.page;
+  } else {
+    window.page = await initPage(window.browser);
+    return window.page;
+  }
+};

@@ -1,8 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header>
       <q-bar class="q-ma-xs q-electron-drag bg-primary">
-        <q-icon name="laptop" />
         <div>Y-GINI</div>
         <q-space />
         <q-btn dense flat icon="horizontal_rule" @click="minimize" />

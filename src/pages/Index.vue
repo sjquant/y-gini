@@ -1,8 +1,16 @@
 <template>
   <q-page class="q-pa-sm flex flex-center">
     <div class="full-width row items-center justify-center">
-      <TextEditor class="col-6 content-section" />
-      <TransPreview class="col-6 content-section q-pl-lg" />
+      <TextEditor class="col-6 content-section q-pr-sm" />
+      <TransPreview class="col-6 content-section q-pl-sm" />
+      <q-circular-progress
+        v-show="$store.state.isLoading"
+        indeterminate
+        size="60px"
+        :thickness="0.15"
+        color="primary"
+        class="fixed"
+      />
     </div>
   </q-page>
 </template>
