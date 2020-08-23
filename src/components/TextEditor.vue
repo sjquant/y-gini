@@ -44,7 +44,8 @@ export default {
       return text
         .replace(/\r/gm, "")
         .replace(/([\w,=\(\)])\n/gm, "$1 ") // fix incomplete sentence
-        .replace(/(\.)(\d+(\-|−)\d+|(\d+,?)+|\d+)/gm, "$1") // Remove footnote
+        .replace(/(\.)(\d+(\-|−)\d+|(\d+,)+)/gm, "$1") // Remove footnote
+        .replace(/(\.)\d+( ?[A-Z]+)/gm, "$1$2") // Remove footnote
         .replace(/[\.]\n/gm, ".\n\n");
     },
     async translate() {
@@ -59,7 +60,7 @@ export default {
       this.content = this.content
         .replace(/\r/gm, "")
         .replace(/\n/gm, "\n\n")
-        .replace(/([\.]+) /gm, "$1\n\n")
+        .replace(/([^(e.g)][\.]+) /gm, "$1\n\n")
         .replace(/\n\n+/gi, "\n\n");
     },
   },
