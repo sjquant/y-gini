@@ -177,6 +177,7 @@ module.exports = function(/* ctx */) {
         // https://www.electron.build/configuration/configuration
 
         appId: "y-gini",
+        copyright: "Copyright © 2020 ${author}",
       },
 
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration
