@@ -22,6 +22,7 @@ export default {
   methods: {
     splitAll() {
       const translation = this.$store.state.translation
+        .replace(/(<([^(br)^>]+)>)/gi, "")
         .replace(/\r/gm, "")
         .replace(/\n/gm, "<br>")
         .replace(/([\.]+) /gm, "$1<br><br>")

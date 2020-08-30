@@ -60,7 +60,7 @@ export default {
       this.content = this.content
         .replace(/\r/gm, "")
         .replace(/\n/gm, "\n\n")
-        .replace(/([^(e.g)][\.]+) /gm, "$1\n\n")
+        .replace(/([^(e.g)]*[\.]+) /gm, "$1\n\n")
         .replace(/\n\n+/gi, "\n\n");
     },
   },
