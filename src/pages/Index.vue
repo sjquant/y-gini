@@ -1,5 +1,8 @@
 <template>
   <q-page class="q-pa-sm flex flex-center">
+    <q-page-sticky position="top-right" :offset="[16, 16]">
+      <q-btn flat size="sm" icon="settings" dense color="grey-8"></q-btn>
+    </q-page-sticky>
     <div class="full-width row items-center justify-center">
       <TextEditor class="col-6 content-section q-pr-sm" />
       <TransPreview class="col-6 content-section q-pl-sm" />
