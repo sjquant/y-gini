@@ -47,6 +47,15 @@ export default {
     window.addEventListener("contextmenu", () => {
       menu.popup(remote.getCurrentWindow());
     });
+    this.initSetting();
+  },
+  methods: {
+    initSetting() {
+      const setting = localStorage.getItem("setting");
+      if (setting) {
+        this.$store.commit("UPDATE_SETTING", JSON.parse(setting));
+      }
+    },
   },
 };
 </script>

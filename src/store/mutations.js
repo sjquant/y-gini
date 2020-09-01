@@ -14,4 +14,9 @@ export default {
   SET_LOADING(state, status) {
     state.isLoading = status;
   },
+
+  UPDATE_SETTING(state, obj) {
+    state.setting = { ...state.setting, ...obj };
+    localStorage.setItem("setting", JSON.stringify(state.setting));
+  },
 };

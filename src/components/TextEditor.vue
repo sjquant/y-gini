@@ -7,7 +7,8 @@
     </Toolbar>
     <textarea
       ref="editor"
-      class="editor text-subtitle1"
+      class="editor"
+      :style="style"
       v-model="content"
     ></textarea>
   </ContentContainer>
@@ -38,6 +39,14 @@ export default {
       document.execCommand("insertText", false, this.trimSentence(pastedData));
       this.$refs.editor.focus();
     });
+  },
+  computed: {
+    style() {
+      const fontSize = this.$store.state.setting.fontSize;
+      return {
+        "font-size": `${fontSize}px`,
+      };
+    },
   },
   methods: {
     trimSentence(text) {

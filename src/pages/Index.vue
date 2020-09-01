@@ -1,7 +1,14 @@
 <template>
   <q-page class="q-pa-sm flex flex-center">
     <q-page-sticky position="top-right" :offset="[16, 16]">
-      <q-btn flat size="sm" icon="settings" dense color="grey-8"></q-btn>
+      <q-btn
+        flat
+        size="sm"
+        icon="settings"
+        dense
+        color="grey-8"
+        @click="openSettingDialog"
+      ></q-btn>
     </q-page-sticky>
     <div class="full-width row items-center justify-center">
       <TextEditor class="col-6 content-section q-pr-sm" />
@@ -15,6 +22,7 @@
         class="fixed"
       />
     </div>
+    <SettingDialog :on.sync="settingDialogOn" />
   </q-page>
 </template>
 
@@ -24,9 +32,20 @@ import TransPreview from "../components/TransPreview.vue";
 
 export default {
   name: "PageIndex",
+  data() {
+    return {
+      settingDialogOn: false,
+    };
+  },
   components: {
     TextEditor,
     TransPreview,
+    SettingDialog: () => import("../components/SettingDialog.vue"),
+  },
+  methods: {
+    openSettingDialog() {
+      this.settingDialogOn = true;
+    },
   },
 };
 </script>

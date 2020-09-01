@@ -4,7 +4,7 @@
       <ToolbarItem icon="view_headline" label="SPLIT-ALL" @click="splitAll" />
       <ToolbarItem icon="clear" label="CLEAR" @click="clearAll" />
     </Toolbar>
-    <div class="content text-subtitle1" v-html="$store.state.translation"></div>
+    <div class="content" v-html="$store.state.translation" :style="style"></div>
   </ContentContainer>
 </template>
 
@@ -18,6 +18,14 @@ export default {
     ContentContainer,
     Toolbar,
     ToolbarItem,
+  },
+  computed: {
+    style() {
+      const fontSize = this.$store.state.setting.fontSize;
+      return {
+        "font-size": `${fontSize}px`,
+      };
+    },
   },
   methods: {
     splitAll() {
