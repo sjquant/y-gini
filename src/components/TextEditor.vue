@@ -53,8 +53,8 @@ export default {
       return text
         .replace(/\r/gm, "")
         .replace(/([\w,=\(\)])\n/gm, "$1 ") // fix incomplete sentence
-        .replace(/(\.)(\d+(\-|−)\d+|(\d+,)+)/gm, "$1") // Remove footnote
-        .replace(/(\.)\d+( ?[A-Z]+)/gm, "$1$2") // Remove footnote
+        .replace(/([^\d]+\.)(\d+(\-|−)\d+|(\d+,?)+)/gm, "$1") // Remove footnote
+        .replace(/([^\d]+\.)\d+( ?[A-Z]+)/gm, "$1$2") // Remove footnote
         .replace(/[\.]\n/gm, ".\n\n");
     },
     async translate() {
