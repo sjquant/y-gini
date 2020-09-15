@@ -1,5 +1,3 @@
-# Y-GINI
-
 Y-GINI는 논문을 한글로 번역(구글) 해주는 쉬운 도구입니다. 📖
 
 ![1](./images/y-gini.gif)
