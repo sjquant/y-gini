@@ -5,7 +5,10 @@ const getChromiumExecPath = () => {
 };
 
 const initBrowser = async () => {
-  let launchOptions = { headless: true, executablePath: getChromiumExecPath() };
+  let launchOptions = {
+    headless: true,
+    executablePath: getChromiumExecPath(),
+  };
   const browser = await puppeteer.launch(launchOptions);
   return browser;
 };
@@ -26,8 +29,9 @@ const initPage = async browser => {
   );
 
   // detect the source textarea for input data (source string)
-  await page.waitForSelector("#source");
+  await page.waitForSelector("textarea");
   await page.waitFor(1000);
+  console.trace(page);
   return page;
 };
 
