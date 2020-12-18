@@ -8,12 +8,8 @@ export default {
       await page.keyboard.type(" ");
       await page.waitForSelector("span[lang='ko'] > span");
       const translation = await page.evaluate(() => {
-        text = "";
         const spans = document.querySelectorAll("span[lang='ko'] > span");
-        for (let span of spans) {
-          if (span.innerText.trim() === "") text += "<br><br>";
-          else text += `<span>${span.innerText.trim()}</span>`;
-        }
+        const text = spans[0].innerText.replace(/\n/g, "<br>");
         return text;
       });
       commit("APPEND_TRANSLATION", translation);
