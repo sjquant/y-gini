@@ -31,7 +31,7 @@ export default {
     };
   },
   mounted() {
-    this.$refs.editor.addEventListener("paste", e => {
+    this.$refs.editor.addEventListener("paste", (e) => {
       // Change paste behavior
       e.preventDefault();
       const clipboardData = e.clipboardData || window.clipboardData;
@@ -52,7 +52,7 @@ export default {
     trimSentence(text) {
       return text
         .replace(/\r/gm, "")
-        .replace(/([\w,=\(\)])\n/gm, "$1 ") // fix incomplete sentence
+        .replace(/([\w,=\(\)^(e.g|et al)])\n/gm, "$1 ") // fix incomplete sentence
         .replace(/([^\d]+\.)(\d+(\-|−|–)\d+|(\d+,?)+)/gm, "$1") // Remove footnote
         .replace(/([^\d]+\.)\d+( ?[A-Z]+)/gm, "$1$2") // Remove footnote
         .replace(/ ?\[(\d+(\-|−|–|,)\d+|\d+)\]/gm, "") // Remove footnote
@@ -70,7 +70,7 @@ export default {
       this.content = this.content
         .replace(/\r/gm, "")
         .replace(/\n/gm, "\n\n")
-        .replace(/([^(e.g)]*[\.]+) /gm, "$1\n\n")
+        .replace(/([^(e.g|et al)][\.]+) /gm, "$1\n\n")
         .replace(/\n\n+/gi, "\n\n");
     },
   },
