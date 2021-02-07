@@ -30,7 +30,7 @@ Y-GINI는 논문을 한글로 번역(구글) 해주는 쉬운 도구입니다. �
 
 - 다운로드
 
-  y-gini는 Windows 플랫폼만을 지원합니다. 추후 요청이 있으면 OSX 플랫폼을 지원할 계획입니다. 아래 링크를 누른 뒤 [Y-GINI.Setup.0.2.5.exe](https://github.com/sjquant/y-gini/releases/download/0.2.5/Y-GINI.Setup.0.2.5.exe)를 다운로드합니다.
+  y-gini는 Windows 플랫폼만을 지원합니다. 추후 요청이 있으면 OSX 플랫폼을 지원할 계획입니다. 아래 링크를 누른 뒤 [Y-GINI.Setup.0.2.7.exe](https://github.com/sjquant/y-gini/releases/download/0.2.5/Y-GINI.Setup.0.2.7.exe)를 다운로드합니다.
 
   [[📌클릭해서 다운로드 하기📌]](https://github.com/sjquant/y-gini/releases)
 

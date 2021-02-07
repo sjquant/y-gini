@@ -31,7 +31,7 @@ export default {
     };
   },
   mounted() {
-    this.$refs.editor.addEventListener("paste", (e) => {
+    this.$refs.editor.addEventListener("paste", e => {
       // Change paste behavior
       e.preventDefault();
       const clipboardData = e.clipboardData || window.clipboardData;
@@ -56,6 +56,7 @@ export default {
         .replace(/([^\d]+\.)(\d+(\-|−|–)\d+|(\d+,?)+)/gm, "$1") // Remove footnote
         .replace(/([^\d]+\.)\d+( ?[A-Z]+)/gm, "$1$2") // Remove footnote
         .replace(/ ?\[(\d+(\-|−|–|,)\d+|\d+)\]/gm, "") // Remove footnote
+        .replace(/,(\d+)/gm, "") // Remove footnote
         .replace(/[\.]\n/gm, ".\n");
     },
     async translate() {
