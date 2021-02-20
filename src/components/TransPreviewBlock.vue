@@ -4,6 +4,7 @@
     v-html="translation"
     tabindex="0"
     :style="style"
+    @keyup.delete="deleteBlock"
   ></div>
 </template>
 <script>
@@ -30,6 +31,9 @@ export default {
         .replace(/([\.]+) /gm, "$1<br><br>")
         .replace(/<br><br>+/gi, "<br><br>");
       this.$store.commit("UPDATE_TRANSLATION", { index, translation });
+    },
+    deleteBlock() {
+      this.$store.commit("DELETE_TRANSLATION", this.index);
     },
   },
 };
