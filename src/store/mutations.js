@@ -1,14 +1,16 @@
+import Vue from "vue";
+
 export default {
-  SET_TRANSLATION(state, translation) {
-    state.translation = translation;
+  UPDATE_TRANSLATION(state, { index, translation }) {
+    Vue.set(state.translations, index, translation);
   },
 
   APPEND_TRANSLATION(state, translation) {
-    state.translation += `${translation}<br><br>`;
+    state.translations.push(`${translation}<br><br>`);
   },
 
   CLEAR_TRANSLATION(state) {
-    state.translation = "";
+    state.translations = [];
   },
 
   SET_LOADING(state, status) {

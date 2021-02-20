@@ -1,6 +1,6 @@
 export default function() {
   return {
-    translation: "",
+    translations: [],
     isLoading: false,
     setting: {
       fontSize: "16",
