@@ -4,7 +4,14 @@
       <ToolbarItem icon="view_headline" label="SPLIT-ALL" @click="splitAll" />
       <ToolbarItem icon="clear" label="CLEAR" @click="clearAll" />
     </Toolbar>
-    <div class="content" v-html="$store.state.translation" :style="style"></div>
+    <TransPreviewBlock
+      class="trans-preview-container"
+      v-for="(translation, i) in $store.state.translations"
+      :key="i"
+      :translation="translation"
+      :index="i"
+      ref="transPreviewBlock"
+    />
   </ContentContainer>
 </template>
 
@@ -12,30 +19,21 @@
 import ContentContainer from "./ContentContainer.vue";
 import Toolbar from "./Toolbar.vue";
 import ToolbarItem from "./ToolbarItem.vue";
+import TransPreviewBlock from "./TransPreviewBlock.vue";
 
 export default {
   components: {
     ContentContainer,
     Toolbar,
     ToolbarItem,
-  },
-  computed: {
-    style() {
-      const fontSize = this.$store.state.setting.fontSize;
-      return {
-        "font-size": `${fontSize}px`,
-      };
-    },
+    TransPreviewBlock,
   },
   methods: {
     splitAll() {
-      const translation = this.$store.state.translation
-        .replace(/(<([^(br)^>]+)>)/gi, "")
-        .replace(/\r/gm, "")
-        .replace(/\n/gm, "<br>")
-        .replace(/([\.]+) /gm, "$1<br><br>")
-        .replace(/<br><br>+/gi, "<br><br>");
-      this.$store.commit("SET_TRANSLATION", translation);
+      const blocks = this.$refs.transPreviewBlock;
+      for (let block of blocks) {
+        block.splitAll();
+      }
     },
     clearAll() {
       this.$store.commit("CLEAR_TRANSLATION");
@@ -43,17 +41,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.content {
-  padding: 10px;
-  line-height: 1.5;
-  max-height: calc(100% - 32px);
-  overflow-y: auto;
-  br {
-    content: "";
-    display: block;
-    margin: 16px;
-  }
-}
-</style>
