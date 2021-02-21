@@ -1,9 +1,9 @@
 <template>
   <ContentContainer>
     <Toolbar>
-      <ToolbarItem icon="translate" label="TRANSLATE" @click="translate" />
-      <ToolbarItem icon="view_headline" label="SPLIT-ALL" @click="splitAll" />
-      <ToolbarItem icon="clear" label="CLEAR" @click="clearAll" />
+      <ToolbarItem icon="translate" label="번역" @click="translate" />
+      <ToolbarItem icon="view_headline" label="문장분할" @click="splitAll" />
+      <ToolbarItem icon="clear" label="전체삭제" @click="clearAll" />
     </Toolbar>
     <textarea
       ref="editor"

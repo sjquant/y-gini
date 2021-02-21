@@ -3,8 +3,7 @@
     <slot />
   </div>
 </template>
-
-<style lang="scss" scoped>
+<style lang="scss">
 .toolbar-container {
   height: 32px;
   padding: 0 4px;

@@ -1,3 +1,5 @@
+import utils from "../utils.js";
+
 export default {
   async TRANSLATE({ commit }, content) {
     commit("SET_LOADING", true);
@@ -7,11 +9,12 @@ export default {
       await page.$eval("textarea", (el, value) => (el.value = value), content);
       await page.keyboard.type(" ");
       await page.waitForSelector("span[lang='ko'] > span");
-      const translation = await page.evaluate(() => {
+      let translation = await page.evaluate(() => {
         const spans = document.querySelectorAll("span[lang='ko']");
-        const text = spans[0].innerText.replace(/\n/g, "<br>");
+        const text = spans[0].innerText;
         return text;
       });
+      translation = utils.escapeHTML(translation).replace(/\n/g, "<br>");
       commit("APPEND_TRANSLATION", translation);
       await page.$eval("textarea", el => (el.value = ""));
       await page.keyboard.type(" ");
