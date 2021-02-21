@@ -1,17 +1,23 @@
 <template>
-  <q-btn flat size="sm" :label="label" :icon="icon" dense @click="onClick" />
+  <q-btn
+    flat
+    :size="size"
+    :label="label"
+    :icon="icon"
+    dense
+    @click.prevent="onClick"
+    @mousedown.prevent
+  />
 </template>
 
 <script>
 export default {
   props: {
-    icon: {
+    icon: String,
+    label: { type: String, default: "" },
+    size: {
       type: String,
-      required: true,
-    },
-    label: {
-      type: String,
-      required: true,
+      default: "sm",
     },
   },
   methods: {

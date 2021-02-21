@@ -1,28 +1,69 @@
 <template>
   <div
-    class="trans-preview-container__block"
-    v-html="translation"
     tabindex="0"
-    :style="style"
+    class="trans-preview-container__block"
     @keyup.delete="deleteBlock"
-  ></div>
+    @keyup.ctrl.67="copyBlock"
+    @mouseenter="mouseenter"
+    @mouseleave="hover = false"
+    @focus="focus = true"
+    @blur="focus = false"
+  >
+    <Toolbar v-show="showToolbar" :style="toolbarStyle">
+      <ToolbarItem icon="view_headline" @click="splitSentences" />
+      <ToolbarItem icon="content_copy" @click="copyBlock" />
+      <ToolbarItem icon="delete" size="xs" @click="deleteBlock" />
+    </Toolbar>
+    <div
+      v-html="translation"
+      :style="contentStyle"
+      class="block__content"
+    ></div>
+  </div>
 </template>
 <script>
+import utils from "../utils.js";
+import Toolbar from "./Toolbar.vue";
+import ToolbarItem from "./ToolbarItem.vue";
+
 export default {
+  components: {
+    Toolbar,
+    ToolbarItem,
+  },
+  data() {
+    return {
+      toolbarWidth: 0,
+      rect: {},
+      focus: false,
+      hover: false,
+    };
+  },
   props: {
     translation: String,
     index: Number,
   },
   computed: {
-    style() {
+    contentStyle() {
       const fontSize = this.$store.state.setting.fontSize;
       return {
         "font-size": `${fontSize}px`,
       };
     },
+    toolbarStyle() {
+      const { top, right } = this.rect;
+      return {
+        position: "fixed",
+        left: `${right - 64}px`,
+        top: `${top - 16}px`,
+      };
+    },
+    showToolbar() {
+      return this.focus || this.hover;
+    },
   },
   methods: {
-    splitAll() {
+    splitSentences() {
       const index = this.index;
       const translation = this.translation
         .replace(/(<([^(br)^>]+)>)/gi, "")
@@ -31,9 +72,22 @@ export default {
         .replace(/([\.]+) /gm, "$1<br><br>")
         .replace(/<br><br>+/gi, "<br><br>");
       this.$store.commit("UPDATE_TRANSLATION", { index, translation });
+      this.focusSelf();
     },
     deleteBlock() {
       this.$store.commit("DELETE_TRANSLATION", this.index);
+      this.focusSelf();
+    },
+    copyBlock() {
+      utils.copyText(this.translation);
+      this.focusSelf();
+    },
+    mouseenter(e) {
+      this.rect = e.target.getBoundingClientRect();
+      this.hover = true;
+    },
+    focusSelf() {
+      this.$el.focus();
     },
   },
 };
@@ -41,13 +95,34 @@ export default {
 
 <style lang="scss" scoped>
 .trans-preview-container__block {
-  padding: 10px;
   line-height: 1.5;
-  max-height: calc(100% - 32px);
-  overflow-y: auto;
+  outline: none;
+  &:hover {
+    background-color: $grey-2;
+  }
 
   &:focus {
-    outline: 2px dashed $primary-light;
+    border: 2px dashed $primary-light;
+  }
+
+  .toolbar-container {
+    padding: 2px 8px;
+    height: 26px;
+    margin: 4px 0;
+    background-color: #fff;
+    border: 1px solid $grey-3;
+    box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.1);
+
+    /deep/ .q-btn {
+      margin: 0px;
+    }
+    /deep/ .q-btn--dense .on-left {
+      margin-right: 2px;
+    }
+  }
+
+  .block__content {
+    padding: 16px 8px;
   }
 
   br {
