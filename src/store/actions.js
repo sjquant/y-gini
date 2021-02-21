@@ -1,8 +1,8 @@
 export default {
   async TRANSLATE({ commit }, content) {
+    commit("SET_LOADING", true);
     try {
-      commit("SET_LOADING", true);
-      const page = await window.getPage();
+      const page = await window.core.getPage();
       await page.focus("textarea");
       await page.$eval("textarea", (el, value) => (el.value = value), content);
       await page.keyboard.type(" ");

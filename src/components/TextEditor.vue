@@ -51,8 +51,7 @@ export default {
   methods: {
     trimSentence(text) {
       return text
-        .replace(/\r/gm, "")
-        .replace(/([\w,=\(\)(e\.g\.|et al\.|)])\n/gm, "$1 ") // fix incomplete sentence
+        .replace(/([\w,=\(\)]|e\.g\.|et al\.|i\.e\.)(\r?\n)+/gm, "$1 ") // fix incomplete sentence
         .replace(/([^\d]+\.)(\d+(\-|−|–)\d+|(\d+,?)+)/gm, "$1") // Remove footnote
         .replace(/([^\d]+\.)\d+( ?[A-Z]+)/gm, "$1$2") // Remove footnote
         .replace(/ ?\[(\d+(\-|−|–|,)\d+|\d+)\]/gm, "") // Remove footnote
