@@ -1,15 +1,16 @@
 <template>
   <ContentContainer>
     <Toolbar>
+      <ToolbarItem icon="chat" label="원문보기" @click="openOriginalAll" />
       <ToolbarItem icon="view_headline" label="문장분할" @click="splitAll" />
       <ToolbarItem icon="content_copy" label="전체복사" @click="copyAll" />
       <ToolbarItem icon="clear" label="전체삭제" @click="clearAll" />
     </Toolbar>
     <div class="trans-preview-container">
       <TransPreviewBlock
-        v-for="(translation, i) in $store.state.translations"
+        v-for="(item, i) in $store.state.translations"
         :key="i"
-        :translation="translation"
+        :item="item"
         :index="i"
         ref="transPreviewBlock"
       />
@@ -32,6 +33,12 @@ export default {
     TransPreviewBlock,
   },
   methods: {
+    openOriginalAll() {
+      const blocks = this.$refs.transPreviewBlock;
+      for (let block of blocks) {
+        block.openOriginal();
+      }
+    },
     splitAll() {
       const blocks = this.$refs.transPreviewBlock;
       for (let block of blocks) {
@@ -39,7 +46,8 @@ export default {
       }
     },
     copyAll() {
-      const text = this.$store.state.translations.join("");
+      const blocks = this.$refs.transPreviewBlock;
+      const text = blocks.map(block => block.getContent()).join("<br><br>");
       utils.copyText(text);
     },
     clearAll() {

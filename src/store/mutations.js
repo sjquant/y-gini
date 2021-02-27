@@ -2,11 +2,11 @@ import Vue from "vue";
 
 export default {
   APPEND_TRANSLATION(state, translation) {
-    state.translations.push(`${translation}<br><br>`);
+    state.translations.push(translation);
   },
 
   UPDATE_TRANSLATION(state, { index, translation }) {
-    Vue.set(state.translations, index, translation);
+    Vue.set(state.translations[index], "translation", translation);
   },
 
   DELETE_TRANSLATION(state, index) {
