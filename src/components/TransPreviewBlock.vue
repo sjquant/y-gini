@@ -10,15 +10,20 @@
     @blur="focus = false"
   >
     <Toolbar v-show="showToolbar" :style="toolbarStyle">
+      <ToolbarItem icon="chat" @click="openOriginal" />
       <ToolbarItem icon="view_headline" @click="splitSentences" />
       <ToolbarItem icon="content_copy" @click="copyBlock" />
       <ToolbarItem icon="delete" size="xs" @click="deleteBlock" />
     </Toolbar>
-    <div
-      v-html="translation"
-      :style="contentStyle"
-      class="block__content"
-    ></div>
+    <div class="block__content">
+      <div class="block__original" :style="contentStyle" v-if="showOriginal">
+        <q-icon name="keyboard_arrow_right" />
+        {{ original }}
+      </div>
+      <div :style="contentStyle" class="block__translation">
+        {{ translation }}
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -37,13 +42,20 @@ export default {
       rect: {},
       focus: false,
       hover: false,
+      showOriginal: false,
     };
   },
   props: {
-    translation: String,
+    item: Object,
     index: Number,
   },
   computed: {
+    translation() {
+      return this.item.translation;
+    },
+    original() {
+      return this.item.original;
+    },
     contentStyle() {
       const fontSize = this.$store.state.setting.fontSize;
       return {
@@ -63,6 +75,9 @@ export default {
     },
   },
   methods: {
+    openOriginal() {
+      this.showOriginal = !this.showOriginal;
+    },
     splitSentences() {
       const index = this.index;
       const translation = this.translation
@@ -78,8 +93,14 @@ export default {
       this.$store.commit("DELETE_TRANSLATION", this.index);
       this.focusSelf();
     },
+    getContent() {
+      return this.showOriginal
+        ? `${this.original}<br><br>${this.translation}`
+        : this.translation;
+    },
     copyBlock() {
-      utils.copyText(this.translation);
+      const content = this.getContent();
+      utils.copyText(content);
       this.focusSelf();
     },
     mouseenter(e) {
@@ -97,6 +118,7 @@ export default {
 .trans-preview-container__block {
   line-height: 1.5;
   outline: none;
+
   &:hover {
     background-color: $grey-2;
   }
@@ -121,7 +143,12 @@ export default {
     }
   }
 
-  .block__content {
+  .block__original {
+    padding: 16px 8px 0 8px;
+    color: $grey-6;
+  }
+
+  .block__translation {
     padding: 16px 8px;
   }
 
