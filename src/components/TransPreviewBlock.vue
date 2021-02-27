@@ -16,13 +16,10 @@
       <ToolbarItem icon="delete" size="xs" @click="deleteBlock" />
     </Toolbar>
     <div class="block__content">
-      <div class="block__original" :style="contentStyle" v-if="showOriginal">
-        <q-icon name="keyboard_arrow_right" />
-        {{ original }}
-      </div>
-      <div :style="contentStyle" class="block__translation">
-        {{ translation }}
-      </div>
+      <p class="block__original" :style="contentStyle" v-if="showOriginal">
+        <q-icon name="keyboard_arrow_right" />{{ original }}
+      </p>
+      <p :style="contentStyle" class="block__translation">{{ translation }}</p>
     </div>
   </div>
 </template>
@@ -81,11 +78,8 @@ export default {
     splitSentences() {
       const index = this.index;
       const translation = this.translation
-        .replace(/(<([^(br)^>]+)>)/gi, "")
-        .replace(/\r/gm, "")
-        .replace(/\n/gm, "<br>")
-        .replace(/([\.]+) /gm, "$1<br><br>")
-        .replace(/<br><br>+/gi, "<br><br>");
+        .replace(/([\.]+) /gm, "$1\n\n")
+        .replace(/\n\n+/gi, "\n\n");
       this.$store.commit("UPDATE_TRANSLATION", { index, translation });
       this.focusSelf();
     },
@@ -94,9 +88,10 @@ export default {
       this.focusSelf();
     },
     getContent() {
-      return this.showOriginal
-        ? `${this.original}<br><br>${this.translation}`
+      const content = this.showOriginal
+        ? `${this.original}\n\n${this.translation}`
         : this.translation;
+      return content.replace(/\n/g, "<br>");
     },
     copyBlock() {
       const content = this.getContent();
@@ -118,6 +113,8 @@ export default {
 .trans-preview-container__block {
   line-height: 1.5;
   outline: none;
+  word-wrap: break-word;
+  white-space: pre-line;
 
   &:hover {
     background-color: $grey-2;
