@@ -15,7 +15,7 @@
       <ToolbarItem icon="content_copy" @click="copyBlock" />
       <ToolbarItem icon="delete" size="xs" @click="deleteBlock" />
     </Toolbar>
-    <div class="block__content" ref="blockContent">
+    <div class="block__content">
       <div class="block__original" :style="contentStyle" v-if="showOriginal">
         <q-icon name="keyboard_arrow_right" />
         {{ original }}
@@ -118,6 +118,7 @@ export default {
 .trans-preview-container__block {
   line-height: 1.5;
   outline: none;
+
   &:hover {
     background-color: $grey-2;
   }

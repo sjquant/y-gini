@@ -1,5 +1,3 @@
-import utils from "../utils.js";
-
 const googleTranslate = async content => {
   const page = await window.core.getPage();
   await page.focus("textarea");
@@ -11,7 +9,6 @@ const googleTranslate = async content => {
     const text = spans[0].innerText;
     return text;
   });
-  translation = utils.escapeHTML(translation);
   // Remove textarea
   await page.$eval("textarea", el => (el.value = ""));
   await page.keyboard.type(" ");
