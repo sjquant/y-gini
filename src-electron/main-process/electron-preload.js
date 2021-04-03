@@ -1,5 +1,7 @@
 window.core = {};
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-extra");
+const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+puppeteer.use(StealthPlugin());
 
 const getChromiumExecPath = () => {
   return puppeteer.executablePath().replace("app.asar", "app.asar.unpacked");
@@ -28,11 +30,11 @@ const initPage = async () => {
   );
 
   // define source and target language code
-  let sourceLang = "en",
+  const sourceLang = "en",
     targetLang = "ko";
 
   await page.goto(
-    `https://translate.google.com/#view=home&op=translate&sl=${sourceLang}&tl=${targetLang}`
+    `https://translate.google.com/?hl=${sourceLang}&sl=${sourceLang}&tl=${targetLang}&op=translation`
   );
 
   // detect the source textarea for input data (source string)
